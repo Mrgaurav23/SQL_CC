@@ -41,3 +41,50 @@ SELECT
     SUM(stock_quantity) as total_stock
 FROM products;
 
+-- ! Give me total number of products in each category
+
+SELECT 
+    category_id,COUNT(*) FROM products
+    GROUP BY category_id
+
+-- ! Give me total number of active and inactive
+-- ! products in each category
+
+SELECT * from products
+
+SELECT 
+   category_id,is_active, COUNT(*) from products
+   GROUP BY category_id,is_active
+
+-- ! Give me total number of products in each category
+-- ! include category name in the results
+
+SELECT * from categories
+
+SELECT 
+    p.category_id, 
+    c.category_name,
+    COUNT(*) 
+FROM products as p
+LEFT JOIN categories as c on c.category_id = p.category_id
+GROUP BY p.category_id, c.category_name;
+
+-- ! Give me total number of products in each category
+-- ! and give me categories having > 5 products
+
+SELECT 
+   category_id,COUNT(*) from products
+   GROUP BY category_id
+   HAVING count(*) > 5;
+
+-- ! Find departments having more than one managed employee,
+-- ! where their combined salary of whole department exceeds 200000 rupees.
+
+SELECT 
+    department_id,
+    COUNT(*),
+    SUM(salary) as total_dep_salary
+FROM employees
+WHERE manager_id IS NOT NULL
+GROUP BY department_id
+HAVING COUNT(*) > 1;
